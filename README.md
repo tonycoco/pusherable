@@ -1,5 +1,7 @@
 # Pusherable
 
+[![Build Status](https://travis-ci.org/tonycoco/pusherable.png)](https://travis-ci.org/tonycoco/pusherable)
+
 Adds callback hooks for your ActiveRecord models for sending messages to a Pusher channel.
 
 ## Installation
