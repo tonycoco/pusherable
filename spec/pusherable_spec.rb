@@ -6,17 +6,6 @@ describe Pusherable do
       NonPusherableModel.pusherable?.should == false
       PusherableModel.pusherable?.should == true
     end
-
-    it 'should set the channel to push to' do
-      DefaultedPusherableModel.pusherable_channel.should == 'test_channel'
-      PusherableModel.pusherable_channel.should == 'our_channel'
-
-      default_model = DefaultedPusherableModel.new
-      setup_model = PusherableModel.new
-
-      default_model.pusherable_channel.should == 'test_channel'
-      setup_model.pusherable_channel.should == 'our_channel'
-    end
   end
 
   describe 'callbacks' do
@@ -52,6 +41,19 @@ describe Pusherable do
       @non_pusherable_model.save
       @non_pusherable_model.should_not_receive(:pusherable_trigger_destroy)
       @non_pusherable_model.destroy
+    end
+  end
+
+  describe 'channels' do
+    it 'should get and set the channel to push to' do
+      DefaultedPusherableModel.pusherable_channel.should == 'test_channel'
+      PusherableModel.pusherable_channel.should == 'our_channel'
+
+      default_model = DefaultedPusherableModel.new
+      setup_model = PusherableModel.new
+
+      default_model.pusherable_channel.should == 'test_channel'
+      setup_model.pusherable_channel.should == 'our_channel'
     end
   end
 end
