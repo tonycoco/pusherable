@@ -20,7 +20,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'activerecord', '~> 3.2.0'
   gem.add_development_dependency 'pusher', '~> 0.11.0'
   gem.add_development_dependency 'sqlite3'
-  gem.add_development_dependency 'rspec', '~> 2.12.0'
+  gem.add_development_dependency 'rspec', '~> 2.13.0'
   gem.add_development_dependency 'acts_as_fu'
   gem.add_development_dependency 'database_cleaner'
+  gem.add_development_dependency 'rake'
 end

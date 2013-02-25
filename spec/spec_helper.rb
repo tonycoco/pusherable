@@ -1,5 +1,7 @@
-require 'database_cleaner'
+require 'rubygems'
+require 'bundler/setup'
 require 'active_record'
+require 'database_cleaner'
 require 'pusher'
 require 'pusherable'
 
