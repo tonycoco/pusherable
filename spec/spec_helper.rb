@@ -3,6 +3,11 @@ require 'bundler/setup'
 require 'active_record'
 require 'database_cleaner'
 require 'pusher'
+
+Pusher.app_id = '123456'
+Pusher.secret = 'FAKE'
+Pusher.key    = 'FAKE'
+
 require 'pusherable'
 
 ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')

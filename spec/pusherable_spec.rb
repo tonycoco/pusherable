@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Pusherable do
+  before do
+    Pusher.stub(:trigger).and_return true
+  end
+
   describe 'setup' do
     it 'should make ActiveRecord models pusherable' do
       NonPusherableModel.pusherable?.should == false
@@ -12,7 +16,6 @@ describe Pusherable do
     before(:each) do
       @pusherable_model = PusherableModel.new
       @non_pusherable_model = NonPusherableModel.new
-      Pusher.stub(:trigger).and_return true
     end
 
     it 'should trigger after create' do
