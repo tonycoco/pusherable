@@ -27,15 +27,15 @@ module Pusherable
       end
 
       def pusherable_trigger_create
-        Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.create", { model_id: self.id })
+        Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.create", self.to_json)
       end
 
       def pusherable_trigger_update
-        Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.update", { model_id: self.id })
+        Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.update", self.to_json)
       end
 
       def pusherable_trigger_destroy
-        Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.destroy", { model_id: self.id })
+        Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.destroy", self.to_json)
       end
     end
   end

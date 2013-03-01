@@ -2,13 +2,13 @@
 
 [![Build Status](https://travis-ci.org/tonycoco/pusherable.png)](https://travis-ci.org/tonycoco/pusherable)
 
-Adds callback hooks for your ActiveRecord models for sending messages to a Pusher channel.
+Adds callback hooks for your _ActiveRecord_ models for sending messages to a _Pusher_ channel.
 
 ## Installation
 
-Install and configure Pusher to work on your application by following the [pusher gem's instructions](https://github.com/pusher/pusher-gem).
+Install and configure _Pusher_ to work on your application by following the [pusher gem's instructions](https://github.com/pusher/pusher-gem).
 
-Then, add this line to your application's Gemfile:
+Then, add this line to your application's _Gemfile_:
 
     gem 'pusherable'
 
@@ -22,32 +22,34 @@ Or install it yourself as:
 
 ## Usage
 
-Add in the following lines to any ActiveRecord model class:
+Add in the following lines to any _ActiveRecord_ model class:
 
-    pusherable(YOUR_CHANNEL)
+    pusherable('some_channel')
 
-On your subscribed client(s), events will be triggered by Pusher reflecting your ActiveRecord create/update/destroy actions.
+_Pusherable_ has a default channel of `test_channel`, just like the _Pusher_ example docs, that it will publish to.
 
-Here is a list of the ActiveRecord callbacks that trigger Pusher events...
+On your subscribed client(s), events will be triggered by _Pusher_ reflecting your _ActiveRecord_ create/update/destroy actions.
 
-```
-"model.create" => after_create
-"model.update" => after_update
-"model.destroy" => before_destroy
-```
+Here is a list of the _ActiveRecord_ callbacks that trigger _Pusher_ events...
+
+    ActiveRecord Callback => Triggered Event
+    ----------------------------------------
+    after_create => "model.create"
+    after_update => "model.update"
+    before_destroy => "model.destroy"
 
 ### Example
 
-If you have an ActiveRecord model called, __Post__, and you create a new record, Pusher will receive an event called, "post.create".
-It will also carry a payload of data containing the __model_id__. Future implementations may carry a changeset in the data. For now, let's keep it simple.
+If you have an _ActiveRecord_ model called, _Post_, and you create a new record, _Pusher_ will receive an event called, "post.create".
+It will also carry a payload of data containing a _JSON_ representation of the record (literally calling `to_json` on the record).
 
-The following callbacks that trigger Pusher events in this __Post__ example will then be...
+The following callbacks that trigger _Pusher_ events in this _Post_ example will then be...
 
-```
-"post.create" => after_create
-"post.update" => after_update
-"post.destroy" => before_destroy
-```
+    ActiveRecord Callback => Triggered Event
+    ----------------------------------------
+    after_create => "post.create"
+    after_update => "post.update"
+    before_destroy => "post.destroy"
 
 ## Contributing
 
@@ -56,4 +58,3 @@ The following callbacks that trigger Pusher events in this __Post__ example will
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-st
