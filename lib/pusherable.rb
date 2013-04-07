@@ -41,6 +41,10 @@ module Pusherable
   end
 end
 
-if defined?(ActiveRecord::Base)
+if defined?(::ActiveRecord) && defined?(ActiveRecord::Base)
   ActiveRecord::Base.extend Pusherable
+end
+
+if defined?(::Mongoid) && defined?(::Mongoid::Document)
+  Mongoid::Document.extend Pusherable
 end
