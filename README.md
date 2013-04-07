@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/tonycoco/pusherable.png)](https://travis-ci.org/tonycoco/pusherable)
 
-Adds callback hooks for your _ActiveRecord_ models for sending messages to a _Pusher_ channel.
+Adds callback hooks for your _ActiveModel_ models for sending messages to a _Pusher_ channel.
 
 ## Installation
 
@@ -22,17 +22,17 @@ Or install it yourself as:
 
 ## Usage
 
-Add in the following lines to any _ActiveRecord_ model class:
+Add in the following lines to any _ActiveModel_ model class:
 
     pusherable('some_channel')
 
 _Pusherable_ has a default channel of `test_channel`, just like the _Pusher_ example docs, that it will publish to.
 
-On your subscribed client(s), events will be triggered by _Pusher_ reflecting your _ActiveRecord_ create/update/destroy actions.
+On your subscribed client(s), events will be triggered by _Pusher_ reflecting your ActiveModel_ create/update/destroy actions.
 
-Here is a list of the _ActiveRecord_ callbacks that trigger _Pusher_ events...
+Here is a list of the _ActiveModel_ callbacks that trigger _Pusher_ events...
 
-    ActiveRecord Callback => Triggered Event
+    ActiveModel Callback => Triggered Event
     ----------------------------------------
     after_create => "model.create"
     after_update => "model.update"
@@ -40,16 +40,22 @@ Here is a list of the _ActiveRecord_ callbacks that trigger _Pusher_ events...
 
 ### Example
 
-If you have an _ActiveRecord_ model called, _Post_, and you create a new record, _Pusher_ will receive an event called, "post.create".
+If you have an _ActiveModel_ model called, _Post_, and you create a new record, _Pusher_ will receive an event called, "post.create".
 It will also carry a payload of data containing a _JSON_ representation of the record (literally calling `to_json` on the record).
 
 The following callbacks that trigger _Pusher_ events in this _Post_ example will then be...
 
-    ActiveRecord Callback => Triggered Event
+    ActiveModel Callback => Triggered Event
     ----------------------------------------
     after_create => "post.create"
     after_update => "post.update"
     before_destroy => "post.destroy"
+
+Currently this gem extends `ActiveRecord::Base` and `Mongoid::Document` if defined.
+
+`ActiveRecord::Base.extend Pusherable`
+
+For any other `ActiveModel` compliant "Data store", simply mirror this statement.
 
 ## Contributing
 
