@@ -5,7 +5,6 @@ rvm:
   - 1.9.3
   - 2.0.0
 env:
-  - DB=mongo
   - DB=sqlite3
-before_script:
-  - mongo pusherable_test --eval 'db.addUser("travis", "test");'
+services:
+  - mongodb
