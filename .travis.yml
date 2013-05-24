@@ -3,5 +3,9 @@ script: "bundle install && bundle exec rake"
 rvm:
   - 1.9.2
   - 1.9.3
+  - 2.0.0
+  - DB=mongo
 env:
   - DB=sqlite3
+before_script:
+  - mongo pusherable_test --eval 'db.addUser("travis", "test");'

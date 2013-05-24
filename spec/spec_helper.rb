@@ -12,7 +12,7 @@ Pusher.key = "FAKE"
 require "pusherable"
 
 Mongoid.configure do |config|
-  config.connect_to("pusherable-test")
+  config.connect_to("pusherable_test")
 end
 load File.dirname(__FILE__) + "/support/models/mongoid.rb"
 
