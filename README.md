@@ -10,7 +10,7 @@ Install and configure _Pusher_ to work on your application by following the [pus
 
 Then, add this line to your application's _Gemfile_:
 
-    gem 'pusherable'
+    gem "pusherable"
 
 And then execute:
 
@@ -24,7 +24,7 @@ Or install it yourself as:
 
 Add in the following lines to any _ActiveModel_ model class:
 
-    pusherable('some_channel')
+    pusherable("some_channel")
 
 _Pusherable_ has a default channel of `test_channel`, just like the _Pusher_ example docs, that it will publish to.
 

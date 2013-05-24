@@ -6,5 +6,5 @@ class DefaultedPusherableModel < ActiveRecord::Base
 end
 
 class PusherableModel < ActiveRecord::Base
-  pusherable('our_channel')
+  pusherable("our_channel")
 end

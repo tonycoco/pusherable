@@ -9,6 +9,5 @@ end
 
 class MongoidPusherableModel
   include Mongoid::Document
-
-  pusherable('our_channel')
+  pusherable("our_channel")
 end

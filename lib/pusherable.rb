@@ -1,4 +1,4 @@
-require 'pusherable/version'
+require "pusherable/version"
 
 module Pusherable
   extend ActiveSupport::Concern
@@ -8,7 +8,7 @@ module Pusherable
       false
     end
 
-    def pusherable(pusherable_channel='test_channel')
+    def pusherable(pusherable_channel = "test_channel")
       raise "Please `gem install pusher` and configure it to run in your app!" if Pusher.app_id.blank? || Pusher.key.blank? || Pusher.secret.blank?
 
       class_attribute :pusherable_channel
@@ -45,10 +45,10 @@ module Pusherable
   end
 end
 
-if defined?(::ActiveRecord) && defined?(ActiveRecord::Base)
+if defined?(ActiveRecord) && defined?(ActiveRecord::Base)
   ActiveRecord::Base.send :include, Pusherable
 end
 
-if defined?(::Mongoid) && defined?(::Mongoid::Document)
+if defined?(Mongoid) && defined?(Mongoid::Document)
   Mongoid::Document.send :include, Pusherable
 end
