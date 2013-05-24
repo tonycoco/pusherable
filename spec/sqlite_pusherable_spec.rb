@@ -1,4 +1,4 @@
-require "sqlite_spec_helper"
+require "spec_helper"
 
 describe Pusherable do
   before do
