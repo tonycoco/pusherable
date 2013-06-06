@@ -2,13 +2,13 @@
 
 [![Build Status](https://travis-ci.org/tonycoco/pusherable.png)](https://travis-ci.org/tonycoco/pusherable)
 
-Adds callback hooks for your _ActiveModel_ models for sending messages to a _Pusher_ channel.
+Adds callback hooks for your `ActiveModel` models for sending messages to a `Pusher` channel.
 
 ## Installation
 
-Install and configure _Pusher_ to work on your application by following the [pusher gem's instructions](https://github.com/pusher/pusher-gem).
+Install and configure `Pusher` to work on your application by following the [pusher gem's instructions](https://github.com/pusher/pusher-gem).
 
-Then, add this line to your application's _Gemfile_:
+Then, add this line to your application's `Gemfile`:
 
     gem "pusherable"
 
@@ -22,52 +22,52 @@ Or install it yourself as:
 
 ## Usage
 
-Add in the following lines to any _ActiveModel_ model class:
+Add in the following lines to any `ActiveModel` model class:
 
     pusherable("some_channel")
 
-_Pusherable_ has a default channel of `test_channel`, just like the _Pusher_ example docs, that it will publish to.
+A `pusherable` model triggers events on a default channel of `test_channel`, just like the `Pusher` example docs, that it will publish to.
 
-On your subscribed client(s), events will be triggered by _Pusher_ reflecting your ActiveModel_ create/update/destroy actions.
+On your subscribed client(s), events will be triggered by `Pusher` reflecting your `ActiveModel` create, update and destroy actions.
 
-Here is a list of the _ActiveModel_ callbacks that trigger _Pusher_ events...
+Here is a list of the `ActiveModel` callbacks that trigger `Pusher` events...
 
-    ActiveModel Callback => Triggered Event (Non-Transactional)
-    ----------------------------------------
-    after_create => "model.create"
-    after_update => "model.update"
-    before_destroy => "model.destroy"
+`ActiveModel` callbacks (Non-Transactional):
 
-    ActiveModel Callback => Triggered Event (Transactional)
-    ----------------------------------------
-    after_commit (:on => :create) => "model.create"
-    after_commit (:on => :update) => "model.update"
-    after_commit (:on => :destroy) => "model.destroy"
+    after_create will trigger "model.create"
+    after_update will trigger "model.update"
+    before_destroy will trigger "model.destroy"
+
+`ActiveModel` callbacks (Transactional):
+
+    after_commit on :create will trigger "model.create"
+    after_commit on :update will trigger "model.update"
+    after_commit on :destroy will trigger "model.destroy"
 
 ### Example
 
-If you have an _ActiveModel_ model called, _Post_, and you create a new record, _Pusher_ will receive an event called, "post.create".
-It will also carry a payload of data containing a _JSON_ representation of the record (literally calling `to_json` on the record).
+If you have an `ActiveModel` model called, `Post`, and you create a new record, `Pusher` will receive an event called, `"post.create"`.
+It will also carry a payload of data containing a JSON representation of the record (literally calling `#to_json` on the record).
 
-The following callbacks that trigger _Pusher_ events in this _Post_ example will then be...
+The following callbacks that trigger `Pusher` events in this `Post` example will then be...
 
-    ActiveModel Callback => Triggered Event (Non-Transactional)
-    ----------------------------------------
-    after_create => "post.create"
-    after_update => "post.update"
-    before_destroy => "post.destroy"
+`ActiveModel` callbacks (Non-Transactional):
 
-    ActiveModel Callback => Triggered Event (Transactional)
-    ----------------------------------------
-    after_commit (:on => :create) => "post.create"
-    after_commit (:on => :update) => "post.update"
-    after_commit (:on => :destroy) => "post.destroy"
+    after_create will trigger "post.create"
+    after_update will trigger "post.update"
+    before_destroy will trigger "post.destroy"
 
-Currently this gem extends `ActiveRecord::Base` and `Mongoid::Document` if defined.
+`ActiveModel` callbacks (Transactional):
+
+    after_commit on :create will trigger "post.create"
+    after_commit on :update will trigger "post.update"
+    after_commit on :destroy will trigger "post.destroy"
+
+Currently this gem extends `ActiveRecord::Base` and `Mongoid::Document` (if defined).
 
 `ActiveRecord::Base.extend Pusherable`
 
-For any other `ActiveModel` compliant "Data store", simply mirror this statement.
+For any other `ActiveModel` compliant data store, simply mirror this statement.
 
 ## Contributing
 
