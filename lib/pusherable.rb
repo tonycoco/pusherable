@@ -16,7 +16,7 @@ module Pusherable
 
       class_eval do
         # Transactional DB should use after_commit so the DB transaction not held up
-        if defined?(Mongoid) && defined?(Mongoid::Document)
+        if defined?(Mongoid) && defined?(Mongoid::Document) && include?(Mongoid::Document)
           after_create :pusherable_trigger_create
           after_update :pusherable_trigger_update
           before_destroy :pusherable_trigger_destroy
