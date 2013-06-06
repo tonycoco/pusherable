@@ -51,11 +51,17 @@ It will also carry a payload of data containing a _JSON_ representation of the r
 
 The following callbacks that trigger _Pusher_ events in this _Post_ example will then be...
 
-    ActiveModel Callback => Triggered Event
+    ActiveModel Callback => Triggered Event (Non-Transactional)
     ----------------------------------------
     after_create => "post.create"
     after_update => "post.update"
     before_destroy => "post.destroy"
+
+    ActiveModel Callback => Triggered Event (Transactional)
+    ----------------------------------------
+    after_commit (:on => :create) => "post.create"
+    after_commit (:on => :update) => "post.update"
+    after_commit (:on => :destroy) => "post.destroy"
 
 Currently this gem extends `ActiveRecord::Base` and `Mongoid::Document` if defined.
 
