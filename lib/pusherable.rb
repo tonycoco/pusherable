@@ -15,9 +15,16 @@ module Pusherable
       self.pusherable_channel = pusherable_channel
 
       class_eval do
-        after_create :pusherable_trigger_create
-        after_update :pusherable_trigger_update
-        before_destroy :pusherable_trigger_destroy
+        # Transactional DB should use after_commit so the DB transaction not held up
+        if defined?(Mongoid) && defined?(Mongoid::Document) && include?(Mongoid::Document)
+          after_create :pusherable_trigger_create
+          after_update :pusherable_trigger_update
+          before_destroy :pusherable_trigger_destroy
+        else
+          after_commit :pusherable_trigger_create, on: :create
+          after_commit :pusherable_trigger_update, on: :update
+          after_commit :pusherable_trigger_destroy, on: :destroy
+        end
 
         def self.pusherable?
           true
