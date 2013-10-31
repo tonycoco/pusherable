@@ -17,12 +17,12 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_development_dependency "activerecord", ">= 3.2.0"
-  gem.add_development_dependency "activesupport", ">= 3.2.0"
-  gem.add_development_dependency "mongoid", ">= 3"
-  gem.add_development_dependency "mongoid-rspec", ">= 1.6"
-  gem.add_development_dependency "pusher", "~> 0.11.0"
+  gem.add_dependency "activerecord", ">= 3.2.0"
+  gem.add_dependency "activesupport", ">= 3.2.0"
+  gem.add_dependency "pusher", "~> 0.12.0"
+  gem.add_development_dependency "mongoid", ">= 3.1.5"
+  gem.add_development_dependency "mongoid-rspec", ">= 1.9.0"
   gem.add_development_dependency "rake"
-  gem.add_development_dependency "rspec", ">= 2.12.0"
+  gem.add_development_dependency "rspec", ">= 2.14.0"
   gem.add_development_dependency "sqlite3"
 end

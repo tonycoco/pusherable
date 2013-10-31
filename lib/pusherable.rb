@@ -1,17 +1,20 @@
 require "pusherable/version"
+require "active_support"
+require "active_record"
 
 module Pusherable
-  extend ActiveSupport::Concern
+  extend ::ActiveSupport::Concern
 
   module ClassMethods
     def pusherable?
       false
     end
 
-    def pusherable(pusherable_channel = "test_channel")
+    def pusherable(pusherable_channel="test_channel")
       raise "Please `gem install pusher` and configure it to run in your app!" if Pusher.app_id.blank? || Pusher.key.blank? || Pusher.secret.blank?
 
       class_attribute :pusherable_channel
+
       self.pusherable_channel = pusherable_channel
 
       class_eval do
