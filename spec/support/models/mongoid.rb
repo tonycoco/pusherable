@@ -11,3 +11,8 @@ class MongoidPusherableModel
   include Mongoid::Document
   pusherable("our_channel")
 end
+
+class MongoidCallablePusherableModel
+  include Mongoid::Document
+  pusherable -> { "lambda_channel" }
+end

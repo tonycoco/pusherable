@@ -48,13 +48,16 @@ describe Pusherable do
   describe "channels" do
     let(:default_model) { MongoidDefaultedPusherableModel.new }
     let(:setup_model) { MongoidPusherableModel.new }
+    let(:callable_model) { MongoidCallablePusherableModel.new }
 
     it "should get and set the channel to push to" do
       expect(MongoidDefaultedPusherableModel.pusherable_channel).to eq("test_channel")
       expect(MongoidPusherableModel.pusherable_channel).to eq("our_channel")
+      expect(MongoidCallablePusherableModel.pusherable_channel).to eq("lambda_channel")
 
       expect(default_model.pusherable_channel).to eq("test_channel")
       expect(setup_model.pusherable_channel).to eq("our_channel")
+      expect(callable_model.pusherable_channel).to eq("lambda_channel")
     end
   end
 end
