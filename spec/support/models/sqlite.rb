@@ -10,5 +10,5 @@ class PusherableModel < ActiveRecord::Base
 end
 
 class CallablePusherableModel < ActiveRecord::Base
-  pusherable -> { "lambda_channel" }
+  pusherable ->(o) { "lambda_channel#{o.name if o}" }
 end

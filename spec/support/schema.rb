@@ -14,6 +14,7 @@ ActiveRecord::Schema.define do
   end
 
   create_table :callable_pusherable_models, :force => true do |t|
+    t.string "name"
     t.timestamps
   end
 end

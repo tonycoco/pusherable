@@ -14,5 +14,6 @@ end
 
 class MongoidCallablePusherableModel
   include Mongoid::Document
-  pusherable -> { "lambda_channel" }
+  field :name, type: String
+  pusherable ->(o) { "lambda_channel#{o.name if o}" }
 end

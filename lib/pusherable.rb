@@ -33,13 +33,21 @@ module Pusherable
         end
 
         self.singleton_class.send(:alias_method, :generated_pusherable_channel, :pusherable_channel)
-
-        def self.pusherable_channel
+        
+        def self.pusherable_channel(obj=nil)
           if generated_pusherable_channel.respond_to? :call
-            generated_pusherable_channel.call
+            if generated_pusherable_channel.arity > 0
+              generated_pusherable_channel.call(obj)
+            else
+              generated_pusherable_channel.call
+            end
           else
             generated_pusherable_channel
           end
+        end
+
+        def pusherable_channel
+          self.class.pusherable_channel(self)
         end
 
         private
