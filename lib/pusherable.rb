@@ -66,6 +66,12 @@ module Pusherable
           self.class.pusherable_channel(self)
         end
 
+        [:pusherable_triggers?, :activate_pusherable_triggers, :deactivate_pusherable_triggers].each do |method|
+          define_method method do
+            self.class.send method
+          end
+        end
+
         private
 
         def pusherable_class_name
