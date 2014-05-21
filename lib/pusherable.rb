@@ -14,18 +14,34 @@ module Pusherable
       raise "Please `gem install pusher` and configure it to run in your app!" if Pusher.app_id.blank? || Pusher.key.blank? || Pusher.secret.blank?
 
       class_attribute :pusherable_channel
+      class_attribute :triggers_active
 
       self.pusherable_channel = pusherable_channel
+      self.triggers_active = true
+
+      class << self
+        def pusherable_triggers?
+          triggers_active
+        end
+
+        def activate_pusherable_triggers
+          self.triggers_active = true
+        end
+
+        def deactivate_pusherable_triggers
+          self.triggers_active = false
+        end
+      end
 
       class_eval do
         if defined?(Mongoid) && defined?(Mongoid::Document) && include?(Mongoid::Document)
-          after_create :pusherable_trigger_create
-          after_update :pusherable_trigger_update
-          before_destroy :pusherable_trigger_destroy
+          after_create :pusherable_trigger_create, if: :triggers_active
+          after_update :pusherable_trigger_update, if: :triggers_active
+          before_destroy :pusherable_trigger_destroy, if: :triggers_active
         else
-          after_commit :pusherable_trigger_create, on: :create
-          after_commit :pusherable_trigger_update, on: :update
-          after_commit :pusherable_trigger_destroy, on: :destroy
+          after_commit :pusherable_trigger_create, on: :create, if: :triggers_active
+          after_commit :pusherable_trigger_update, on: :update, if: :triggers_active
+          after_commit :pusherable_trigger_destroy, on: :destroy, if: :triggers_active
         end
 
         def self.pusherable?
