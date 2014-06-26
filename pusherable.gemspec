@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Adds callback hooks for your ActiveModel models for sending messages to a Pusher channel.}
   gem.summary       = %q{Adds callback hooks to your models for sending messages to a Pusher channel.}
   gem.homepage      = "https://github.com/tonycoco/pusherable"
+  gem.licenses      = ["MIT"]
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

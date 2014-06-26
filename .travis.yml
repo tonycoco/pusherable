@@ -3,6 +3,7 @@ script: "bundle install && bundle exec rake"
 rvm:
   - 1.9.3
   - 2.0.0
+  - 2.1.1
 env:
   - DB=sqlite3
 services:
