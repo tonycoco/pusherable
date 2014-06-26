@@ -48,8 +48,8 @@ module Pusherable
           true
         end
 
-        self.singleton_class.send(:alias_method, :generated_pusherable_channel, :pusherable_channel)
-        
+        singleton_class.send(:alias_method, :generated_pusherable_channel, :pusherable_channel)
+
         def self.pusherable_channel(obj=nil)
           if generated_pusherable_channel.respond_to? :call
             if generated_pusherable_channel.arity > 0
@@ -79,15 +79,15 @@ module Pusherable
         end
 
         def pusherable_trigger_create
-          Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.create", self.to_json)
+          Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.create", to_json)
         end
 
         def pusherable_trigger_update
-          Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.update", self.to_json)
+          Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.update", to_json)
         end
 
         def pusherable_trigger_destroy
-          Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.destroy", self.to_json)
+          Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.destroy", to_json)
         end
       end
     end
