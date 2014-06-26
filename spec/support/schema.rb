@@ -12,4 +12,9 @@ ActiveRecord::Schema.define do
   create_table :pusherable_models, :force => true do |t|
     t.timestamps
   end
+
+  create_table :callable_pusherable_models, :force => true do |t|
+    t.string "name"
+    t.timestamps
+  end
 end

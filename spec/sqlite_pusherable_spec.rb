@@ -48,13 +48,16 @@ describe Pusherable do
   describe "channels" do
     let(:default_model) { DefaultedPusherableModel.new }
     let(:setup_model) { PusherableModel.new }
+    let(:callable_model) { CallablePusherableModel.new(name: '_name') }
 
     it "should get and set the channel to push to" do
       expect(DefaultedPusherableModel.pusherable_channel).to eq("test_channel")
       expect(PusherableModel.pusherable_channel).to eq("our_channel")
+      expect(CallablePusherableModel.pusherable_channel).to eq("lambda_channel")
 
       expect(default_model.pusherable_channel).to eq("test_channel")
       expect(setup_model.pusherable_channel).to eq("our_channel")
+      expect(callable_model.pusherable_channel).to eq("lambda_channel_name")
     end
   end
 end
