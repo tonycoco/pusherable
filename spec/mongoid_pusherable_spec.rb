@@ -25,7 +25,7 @@ describe Pusherable do
       pusherable_model.should_receive(:pusherable_trigger_create).once
       pusherable_model.save
       pusherable_model.should_receive(:pusherable_trigger_update).once
-      pusherable_model.save!
+      pusherable_model.save
     end
 
     it "should trigger after update" do
