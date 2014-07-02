@@ -9,11 +9,13 @@ describe Pusherable do
     it "should make ActiveRecord models pusherable" do
       expect(NonPusherableModel.pusherable?).to be_false
       expect(PusherableModel.pusherable?).to be_true
+      expect(PusherableModel.pusherable_triggers?).to be_true
     end
   end
 
   describe "callbacks" do
     let(:pusherable_model) { PusherableModel.new }
+    let(:pusherable_model_without_triggers) { PusherableModel.new }
     let(:non_pusherable_model) { NonPusherableModel.new }
 
     it "should trigger after create" do
@@ -33,6 +35,12 @@ describe Pusherable do
       pusherable_model.save
       pusherable_model.should_receive(:pusherable_trigger_destroy).once
       pusherable_model.destroy
+    end
+
+    it "should not trigger after create when triggers are off" do
+      pusherable_model_without_triggers.deactivate_pusherable_triggers
+      pusherable_model_without_triggers.should_not_receive(:pusherable_trigger_create)
+      pusherable_model_without_triggers.save!
     end
 
     it "should not trigger events on a regular ActiveRecord model" do

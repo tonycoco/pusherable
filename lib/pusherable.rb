@@ -14,18 +14,34 @@ module Pusherable
       raise "Please `gem install pusher` and configure it to run in your app!" if Pusher.app_id.blank? || Pusher.key.blank? || Pusher.secret.blank?
 
       class_attribute :pusherable_channel
+      class_attribute :pusherable_triggers_active
 
       self.pusherable_channel = pusherable_channel
+      self.pusherable_triggers_active = true
+
+      class << self
+        def pusherable_triggers?
+          pusherable_triggers_active
+        end
+
+        def activate_pusherable_triggers
+          self.pusherable_triggers_active = true
+        end
+
+        def deactivate_pusherable_triggers
+          self.pusherable_triggers_active = false
+        end
+      end
 
       class_eval do
         if defined?(Mongoid) && defined?(Mongoid::Document) && include?(Mongoid::Document)
-          after_create :pusherable_trigger_create
-          after_update :pusherable_trigger_update
-          before_destroy :pusherable_trigger_destroy
+          after_create :pusherable_trigger_create, if: :pusherable_triggers_active
+          after_update :pusherable_trigger_update, if: :pusherable_triggers_active
+          before_destroy :pusherable_trigger_destroy, if: :pusherable_triggers_active
         else
-          after_commit :pusherable_trigger_create, on: :create
-          after_commit :pusherable_trigger_update, on: :update
-          after_commit :pusherable_trigger_destroy, on: :destroy
+          after_commit :pusherable_trigger_create, on: :create, if: :pusherable_triggers_active
+          after_commit :pusherable_trigger_update, on: :update, if: :pusherable_triggers_active
+          after_commit :pusherable_trigger_destroy, on: :destroy, if: :pusherable_triggers_active
         end
 
         def self.pusherable?
@@ -48,6 +64,12 @@ module Pusherable
 
         def pusherable_channel
           self.class.pusherable_channel(self)
+        end
+
+        [:pusherable_triggers?, :activate_pusherable_triggers, :deactivate_pusherable_triggers].each do |method|
+          define_method method do
+            self.class.send method
+          end
         end
 
         private
