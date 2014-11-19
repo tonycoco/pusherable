@@ -10,56 +10,51 @@ module Pusherable
       false
     end
 
-    def pusherable(pusherable_channel="test_channel")
+    def pusherable(channel="test_channel")
       raise "Please `gem install pusher` and configure it to run in your app!" if Pusher.app_id.blank? || Pusher.key.blank? || Pusher.secret.blank?
 
-      class_attribute :pusherable_channel
-      class_attribute :pusherable_triggers_active
-
-      self.pusherable_channel = pusherable_channel
-      self.pusherable_triggers_active = true
+      class_attribute :pusherable_channel_obj
+      self.pusherable_channel_obj = channel
 
       class << self
         def pusherable_triggers?
-          pusherable_triggers_active
+          Thread.current.thread_variable_get("#{self.name.underscore}_pusherable_triggers_active") != false
         end
 
         def activate_pusherable_triggers
-          self.pusherable_triggers_active = true
+          Thread.current.thread_variable_set "#{self.name.underscore}_pusherable_triggers_active", true
         end
 
         def deactivate_pusherable_triggers
-          self.pusherable_triggers_active = false
+          Thread.current.thread_variable_set "#{self.name.underscore}_pusherable_triggers_active", false
+        end
+
+        def pusherable?
+          true
+        end
+
+        def pusherable_channel(obj=nil)
+          if pusherable_channel_obj.respond_to? :call
+            if pusherable_channel_obj.arity > 0
+              pusherable_channel_obj.call(obj)
+            else
+              pusherable_channel_obj.call
+            end
+          else
+            pusherable_channel_obj
+          end
         end
       end
 
       class_eval do
         if defined?(Mongoid) && defined?(Mongoid::Document) && include?(Mongoid::Document)
-          after_create :pusherable_trigger_create, if: :pusherable_triggers_active
-          after_update :pusherable_trigger_update, if: :pusherable_triggers_active
-          before_destroy :pusherable_trigger_destroy, if: :pusherable_triggers_active
+          after_create :pusherable_trigger_create, if: :pusherable_triggers?
+          after_update :pusherable_trigger_update, if: :pusherable_triggers?
+          before_destroy :pusherable_trigger_destroy, if: :pusherable_triggers?
         else
-          after_commit :pusherable_trigger_create, on: :create, if: :pusherable_triggers_active
-          after_commit :pusherable_trigger_update, on: :update, if: :pusherable_triggers_active
-          after_commit :pusherable_trigger_destroy, on: :destroy, if: :pusherable_triggers_active
-        end
-
-        def self.pusherable?
-          true
-        end
-
-        singleton_class.send(:alias_method, :generated_pusherable_channel, :pusherable_channel)
-
-        def self.pusherable_channel(obj=nil)
-          if generated_pusherable_channel.respond_to? :call
-            if generated_pusherable_channel.arity > 0
-              generated_pusherable_channel.call(obj)
-            else
-              generated_pusherable_channel.call
-            end
-          else
-            generated_pusherable_channel
-          end
+          after_commit :pusherable_trigger_create, on: :create, if: :pusherable_triggers?
+          after_commit :pusherable_trigger_update, on: :update, if: :pusherable_triggers?
+          after_commit :pusherable_trigger_destroy, on: :destroy, if: :pusherable_triggers?
         end
 
         def pusherable_channel
