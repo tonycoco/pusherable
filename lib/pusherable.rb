@@ -79,15 +79,15 @@ module Pusherable
         end
 
         def pusherable_trigger_create
-          Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.create", to_json)
+          Pusher.trigger_async(pusherable_channel, "#{pusherable_class_name}.create", to_json)
         end
 
         def pusherable_trigger_update
-          Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.update", to_json)
+          Pusher.trigger_async(pusherable_channel, "#{pusherable_class_name}.update", to_json)
         end
 
         def pusherable_trigger_destroy
-          Pusher.trigger(pusherable_channel, "#{pusherable_class_name}.destroy", to_json)
+          Pusher.trigger_async(pusherable_channel, "#{pusherable_class_name}.destroy", to_json)
         end
       end
     end
