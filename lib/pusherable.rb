@@ -53,8 +53,14 @@ module Pusherable
           before_destroy :pusherable_trigger_destroy, if: :pusherable_triggers?
         else
           after_commit :pusherable_trigger_create, on: :create, if: :pusherable_triggers?
-          after_commit :pusherable_trigger_update, on: :update, if: :pusherable_triggers?
-          after_commit :pusherable_trigger_destroy, on: :destroy, if: :pusherable_triggers?
+
+          if defined?(Paranoia) && include?(Paranoia)
+            after_update :pusherable_trigger_update, if: :pusherable_triggers?
+            before_destroy :pusherable_trigger_destroy, if: :pusherable_triggers?
+          else
+            after_commit :pusherable_trigger_update, on: :update, if: :pusherable_triggers?
+            after_commit :pusherable_trigger_destroy, on: :destroy, if: :pusherable_triggers?
+          end
         end
 
         def pusherable_channel
