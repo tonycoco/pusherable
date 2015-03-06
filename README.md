@@ -4,6 +4,10 @@
 
 Adds callback hooks for your `ActiveModel` models for sending messages to a `Pusher` channel.
 
+## Requirements
+
+* Ruby 2.0+
+
 ## Installation
 
 Install and configure `Pusher` to work on your application by following the [pusher gem's instructions](https://github.com/pusher/pusher-gem).
@@ -68,6 +72,8 @@ Currently this gem extends `ActiveRecord::Base` and `Mongoid::Document` (if defi
 `ActiveRecord::Base.extend Pusherable`
 
 For any other `ActiveModel` compliant data store, simply mirror this statement.
+
+This gem supports soft deletes when used with [paranoia](https://github.com/radar/paranoia).
 
 ## Contributing
 
