@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "activerecord", ">= 3.2.0"
   gem.add_dependency "activesupport", ">= 3.2.0"
-  gem.add_dependency "pusher", "~> 0.12.0"
+  gem.add_dependency "pusher", "~> 0.15.2"
   gem.add_development_dependency "mongoid", "~> 3.1.5"
   gem.add_development_dependency "mongoid-rspec", "~> 1.9.0"
   gem.add_development_dependency "rake"
